@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+<div class="card card-body">
+   
+    <h1>User Detail's</h1>
+     {% if user.image %}
+     <img src="{{ user.image.url}}" alt="Profile Photo" width="100px" height="100px"><br>
+    
+
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Name: {{ user.firstname }}  {{ user.lastname }}</p>
+    {% endif %}   
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div style="display:flex; gap:20px; flex-wrap: wrap;">
+    {% for post in tags %}
+    <div class="card" style="width: 20rem;">
+        <img class="card-img-top" src="{% if post.feature %}{{ post.feature.url }}{% endif %}" alt="Card image cap" width=200px height=200px>
+        <div class="card-body">
+            <h4 class="card-title"><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a></h4>
+            <div style="display:flex; gap:30px">
+                <p><b>category:-&nbsp;<a href="{% url 'category' slug=post.category.slug %}">{{ post.category }}</a></b></p>
+            </div>
+            <p class="card-text">{{ post.text|truncatewords:30 }}<br>
+                <b>Published At:-&nbsp;</b>{{ post.published_date|date:"Y-m-d" }}<br>
+                <b>Tags:-</b>
+                {% for tag in post.tag.all %}
+                <a href="{% url 'tag' slug=tag.slug %}"><small>{{ tag.name }} <b>||</b></small></a>
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
