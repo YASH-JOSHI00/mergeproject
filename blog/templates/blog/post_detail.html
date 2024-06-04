@@ -1,5 +1,6 @@
 {% extends 'blog/base.html' %}
 {% block content %}
+{% if request.user.is_authenticated %}
 <div class="container mt-4">
     <article class="post card p-4 mb-4 shadow-sm">
         <div class="d-flex align-items-center mb-3">
@@ -13,10 +14,13 @@
                 style="max-height: 400px; max-width: 100%;">
         </div>
         <p><b>Category: </b><a href="{% url 'category' slug=post.category.slug %}">{{ post.category }}</a></p>
+    
         <p>{{ post.text|truncatewords:30 }}</p>
         <p><b>Published At: </b>{{ post.published_date|date:"Y-m-d" }}<br>
             <strong>Published By: </strong>{{ post.author }}
         </p>
+
+        
         <aside class="actions text-end">
             <a class="btn btn-outline-secondary" href="{% url 'post_edit' slug=post.slug %}">
                 {% include './icons/pencil-fill.svg' %} Edit
@@ -24,6 +28,7 @@
         </aside>
     </article>
 
+    
     <h4>Add Comment Here</h4>
     <form action="{% url 'comment' %}" method="post" enctype="multipart/form-data" class="mb-4">
         {% csrf_token %}
@@ -56,7 +61,7 @@
                             <button type="submit">Post Reply</button>
                         </form>
 
-                        {% for reply in comment.comment.replies.all %}
+                        {% for reply in comment.comment_replies.all %}
                         <div class="row my-3">
                                 <strong>{{ reply.user.username|title }}</strong> at {{ reply.time }}
                                 <div>{{ reply.body }}</div>
@@ -77,4 +82,71 @@
 {% endfor %}
 </div>
 </div>
+
+
+{% else %}
+<div class="container mt-4">
+    <article class="post card p-4 mb-4 shadow-sm">
+        <div class="d-flex align-items-center mb-3">
+            <img class="rounded-circle border border-secondary me-3"
+                src="{% if post.thumbnail %}{{ post.thumbnail.url }}{% endif %}" alt="Thumbnail"
+                style="height: 60px; width: 60px;">
+            <h2 class="m-0">{{ post.title }}</h2>
+        </div>
+        <div class="text-center mb-3">
+            <img src="{% if post.feature %}{{ post.feature.url }}{% endif %}" alt="feature" class="img-fluid"
+                style="max-height: 400px; max-width: 100%;">
+        </div>
+        <p><b>Category: </b><a href="{% url 'category' slug=post.category.slug %}">{{ post.category }}</a></p>
+    
+        <p>{{ post.text|truncatewords:30 }}</p>
+        <p><b>Published At: </b>{{ post.published_date|date:"Y-m-d" }}<br>
+            <strong>Published By: </strong>{{ post.author }}
+        </p>
+        <div class="comments-section">
+            <h5>Comments</h5>
+            {% for comment in comments %}
+            <div class="card p-3 mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <strong>{{ comment.user.username|title }}</strong>
+                    <small class="text-muted">{{ comment.timestamp }}</small>
+                </div>
+                <div class="mt-2">{{ comment.body }}</div>
+                <div class="reply mx-0">
+                    <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#replyBox{{comment.id}}" aria-expanded="false"
+                        aria-controls="replyBox{{comment.id}}">
+                        Reply
+                    </button>
+                    <div class="collapse" id="replyBox{{comment.id}}">
+                        <div class="card card-body my-2">
+                            <form action="{% url 'reply'%}" method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                <button type="submit">Post Reply</button>
+                            </form>
+    
+                            {% for reply in comment.comment_replies.all %}
+                            <div class="row my-3">
+                                    <strong>{{ reply.user.username|title }}</strong> at {{ reply.time }}
+                                    <div>{{ reply.body }}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+    <p>No comments yet.</p>
+    {% endfor %}
+    </div>
+    </div>
+{% endif %}
 {% endblock %}

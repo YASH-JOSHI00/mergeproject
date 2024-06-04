@@ -14,7 +14,7 @@ def post_list(request):
     return render(request, "blog/post_list.html", {"posts": posts})
 
 def category(request,slug):
-   
+    
     categories = Post.objects.filter(category__slug=slug)
     return render(request, "blog/category.html", {"categories": categories})
 
@@ -26,8 +26,7 @@ def category(request,slug):
 #     else:
 #         tags = Post.objects.all().order_by("published_date")
 #     return render(request, "blog/tag.html", {"tags": tags})
-# pading this task on not understand to me????????//???/////
-    
+
 def comment(request):
     if request.method == 'POST':
         form = CommentForm(request.POST)

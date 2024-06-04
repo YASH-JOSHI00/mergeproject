@@ -10,7 +10,10 @@
                 <h4 class="card-title">
                     <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
                 </h4>
-                
+                  <div style="display:flex; gap:30px">
+                    <p><b>Category:-&nbsp;<a href="{% url 'category' slug=post.category.slug %}">{{ post.category}}</a></b></p>
+                </div>
+
                 <p class="card-text">{{ post.text|truncatewords:30 }}<br>
                     <b>Published At:-&nbsp;</b>{{ post.published_date|date:"Y-m-d" }}<br>
                     <strong>Published By:-&nbsp;</strong>{% if post.author %}{{ post.author }}{% endif %}
