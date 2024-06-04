@@ -23,35 +23,40 @@ export_as_csv.short_description = "Export Selected to CSV"
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'author')
-    
+    Search_Fields=Post.SearchableFields
+    list_filter=Post.FilterFields
     actions = [export_as_csv]
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email')
-  
+    search_fields=User.SearchableFields
     actions = [export_as_csv]
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('post', 'body')
-   
+    list_display = ('post', 'body',)
+    search_fields=Comment.SearchableFields
+    list_filter=Comment.FilterFields
     actions = [export_as_csv]
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
-   
+    search_fields=Category.SearchableFields
+    list_filter=Category.FilterFields
     actions = [export_as_csv]
 
 @admin.register(Tags)
 class TagsAdmin(admin.ModelAdmin):
     list_display = ('name',)
-  
+    search_fields=Tags.SearchableFields
+    list_filter=Tags.FilterFields
     actions = [export_as_csv]
 
 @admin.register(Reply)
 class ReplyAdmin(admin.ModelAdmin):
-    list_display = ('body', 'comment')
-   
+    list_display = ('body', 'comment','time', 'post')
+    search_fields=Reply.SearchableFields
+    list_filter=Reply.FilterFields
     actions = [export_as_csv]

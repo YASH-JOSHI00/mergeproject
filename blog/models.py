@@ -16,7 +16,8 @@ class User(AbstractUser):
     state= models.CharField(max_length=255, blank=True, null=True)
     firstname= models.CharField(max_length=255, blank=True, null=True)
     lastname= models.CharField(max_length=255, blank=True, null=True)
-   
+    SearchableFields = ['title','author']
+ 
     # REQUIRED_FIELDS =[]
     # USERNAME_FIELD = 'email'
 
@@ -31,7 +32,8 @@ class User(AbstractUser):
 class Tags(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
     slug = AutoSlugField( max_length=300, unique=True,populate_from='name')
-   
+    SearchableFields = ['name']
+    FilterFields = ['name']
     def __str__(self): 
         return self.name
 
@@ -39,7 +41,8 @@ class Tags(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
     slug = AutoSlugField( max_length=300, unique=True,populate_from='name')
-    
+    SearchableFields = ['name']
+    FilterFields = ['name']
     def __str__(self): 
         return self.name
 
@@ -55,7 +58,8 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     tag = models.ManyToManyField(Tags, blank=True)
     slug = AutoSlugField( max_length=300, unique=True,populate_from='title')
-    
+    SearchableFields = ['title']
+    FilterFields = ['title']
 
     def publish(self):
         self.published_date = timezone.now()
@@ -71,7 +75,8 @@ class Comment(models.Model):
     body = models.TextField(max_length=500)
     published_date = models.DateTimeField( default=now )
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null = True, blank = True)
-   
+    SearchableFields = ['User','post']
+    FilterFields = ['post']
 
     def __str__(self):
         return f'Comment by {self.user} on {self.post}'
@@ -82,7 +87,8 @@ class Reply(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True ,blank= True)
     body = models.TextField(max_length=500)
     time =models.DateTimeField(default=now)
-    
+    SearchableFields = ['User','post','body']
+    FilterFields = ['post']
 
 def __str__(self):
     return f'comment by {self.user} on {self.post} in {self.body}'
