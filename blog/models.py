@@ -18,8 +18,8 @@ class User(AbstractUser):
     lastname= models.CharField(max_length=255, blank=True, null=True)
     SearchableFields = ['title','author']
  
-    # REQUIRED_FIELDS =[]
-    # USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS =[]
+    USERNAME_FIELD = 'email'
 
     def publish(self):
         self.published_date = timezone.now()

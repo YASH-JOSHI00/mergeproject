@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'polls',
+    'home',
+    'rest_framework',
+    'rest_framework.authtoken'
     
     
 ]
@@ -140,3 +143,5 @@ MEDIA_ROOT= os.path.join(BASE_DIR," media/")
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
