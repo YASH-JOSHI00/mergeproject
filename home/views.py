@@ -5,9 +5,7 @@ from django.shortcuts import get_object_or_404
 from blog.models import User,Category,Post, Comment, Reply  # Replace 'blog' with your app name where User model is defined
 from .Serializers import UserSerializer, CategorySerializer, PostSerializer, CommentSerializer, ReplySerializer # Adjust the import path as per your project structur
 from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-
+    
 
 #  Create views 
 

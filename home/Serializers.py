@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from blog.models import User  # Replace 'blog' with your app name where User model is defined
-from blog.models import User, Post, Comment, Category, Reply, Tags
+from blog.models import User, Post, Comment, Category, Reply
 
 class UserSerializer(serializers.ModelSerializer):
     

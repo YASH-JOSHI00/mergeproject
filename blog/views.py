@@ -18,6 +18,7 @@ def category(request,slug):
     categories = Post.objects.filter(category__slug=slug)
     return render(request, "blog/category.html", {"categories": categories})
 
+# i ama not use these function//
 
 # def tag(request, slug):
 #     print(slug)

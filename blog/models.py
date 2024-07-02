@@ -19,7 +19,7 @@ class User(AbstractUser):
     SearchableFields = ['title','author']
  
     REQUIRED_FIELDS =[]
-    USERNAME_FIELD = 'email'
+    # USERNAME_FIELD = 'email'
 
     def publish(self):
         self.published_date = timezone.now()
@@ -78,6 +78,7 @@ class Comment(models.Model):
     SearchableFields = ['User','post']
     FilterFields = ['post']
 
+
     def __str__(self):
         return f'Comment by {self.user} on {self.post}'
         
@@ -92,3 +93,7 @@ class Reply(models.Model):
 
 def __str__(self):
     return f'comment by {self.user} on {self.post} in {self.body}'
+
+
+
+
