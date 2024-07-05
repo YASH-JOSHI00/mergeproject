@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from blog.models import User,Category,Post, Comment, Reply  # Replace 'blog' with your app name where User model is defined
-from .Serializers import UserSerializer, CategorySerializer, PostSerializer, CommentSerializer, ReplySerializer # Adjust the import path as per your project structur
+from .Serializers import UserSerializer, CategorySerializer, PostSerializer, CommentSerializer, ReplySerializer # Adjust the import path as per your project structure
 from rest_framework.authtoken.models import Token
     
 
